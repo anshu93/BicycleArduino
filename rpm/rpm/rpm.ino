@@ -35,7 +35,7 @@ void loop() {
 
 void magnet() {
   if( (millis() - lastDebounce0) > debounceDelay){
-    counter0++;Bicycle
+    counter0++;
     lastDebounce0 = millis();
   }
 }
