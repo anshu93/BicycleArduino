@@ -23,6 +23,9 @@ int count = 0;
 
 #define CALCULATION_INTERVAL 5
 
+#define HIGH_THRESH 1.05
+#define LOW_THRESH 0.98
+
 float ratio = 0;
 boolean ratio_flag = false;
 
@@ -55,15 +58,14 @@ void setup() {
 ISR(TIMER1_OVF_vect){
  count++;
  //Serial.println("1 s elapsed");
- Serial.println(count);
+ //Serial.println(count);
  //Serial.print("\n");
  if(count == CALCULATION_INTERVAL){
-   Serial.print("5s elapsed");
    if(rpm_wheel != 0 && rpm_pedal != 0){
      ratio = rpm_wheel/rpm_pedal;
-     Serial.print("RATIO: WHEEL/PEDAL");
-     Serial.print(ratio, 6);
-     Serial.print("-----------");
+     Serial.println("RATIO: WHEEL/PEDAL");
+     Serial.println(ratio, 6);
+     Serial.println("-----------");
      ratio_flag = true;
      
      
@@ -77,24 +79,61 @@ ISR(TIMER1_OVF_vect){
 }
 
 void find_ratio(float ratio){
-  if(ratio < 1.1*1.36 && ratio > 0.9*1.36){
+  
+  // M
+  if(ratio < HIGH_THRESH*1.36 && ratio > LOW_THRESH*1.36){
     Serial.println("CURRENT GEAR IS M1");  
   }   
-    if(ratio < 1.1*1.58 && ratio > 0.9*1.58){
+  else if(ratio < HIGH_THRESH*1.58 && ratio > LOW_THRESH*1.58){
     Serial.println("CURRENT GEAR IS M2");  
   }   
-    if(ratio < 1.1*1.81 && ratio > 0.9*1.81){
+  else if(ratio < HIGH_THRESH*1.81 && ratio > LOW_THRESH*1.81){
     Serial.println("CURRENT GEAR IS M3");  
   }   
-    if(ratio < 1.1*2.12 && ratio > 0.9*2.12){
+  else if(ratio < HIGH_THRESH*2.12 && ratio > LOW_THRESH*2.12){
     Serial.println("CURRENT GEAR IS M4");  
   }   
-    if(ratio < 1.1*2.36 && ratio > 0.9*2.36){
+  else if(ratio < HIGH_THRESH*2.36 && ratio > LOW_THRESH*2.36){
     Serial.println("CURRENT GEAR IS M5");  
   }   
-    if(ratio < 1.1*2.72 && ratio > 0.9*2.72){
+  else if(ratio < HIGH_THRESH*2.72 && ratio > LOW_THRESH*2.72){
     Serial.println("CURRENT GEAR IS M6");  
-  }else{
+  }
+  
+  // H
+  
+  else if(ratio < HIGH_THRESH*2 && ratio > LOW_THRESH*2){
+    Serial.println("CURRENT GEAR IS H2");  
+  }
+  else if(ratio < HIGH_THRESH*2.31 && ratio > LOW_THRESH*2.31){
+    Serial.println("CURRENT GEAR IS H3");  
+  }
+  else if(ratio < HIGH_THRESH*2.72 && ratio > LOW_THRESH*2.72){
+    Serial.println("CURRENT GEAR IS H4");  
+  }
+  else if(ratio < HIGH_THRESH*2.94 && ratio > LOW_THRESH*2.94){
+    Serial.println("CURRENT GEAR IS H5");  
+  }
+  else if(ratio < HIGH_THRESH*3.5 && ratio > LOW_THRESH*3.5){
+    Serial.println("CURRENT GEAR IS H6");  
+  }
+  
+  // L
+  
+  else if(ratio < HIGH_THRESH*1 && ratio > LOW_THRESH*1){
+    Serial.println("CURRENT GEAR IS L1");  
+  }
+  else if(ratio < HIGH_THRESH*1.16 && ratio > LOW_THRESH*1.16){
+    Serial.println("CURRENT GEAR IS L2");  
+  }
+  else if(ratio < HIGH_THRESH*1.34 && ratio > LOW_THRESH*1.34){
+    Serial.println("CURRENT GEAR IS L3");  
+  }
+  else if(ratio < HIGH_THRESH*1.75 && ratio > LOW_THRESH*1.75){
+    Serial.println("CURRENT GEAR IS L4");  
+  }
+  
+  else{
    Serial.println("GEAR NOT RECOGNIZED");
   }   
   return;

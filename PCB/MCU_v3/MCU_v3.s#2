@@ -12053,12 +12053,13 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <text x="220.98" y="-78.74" size="1.778" layer="91">LCD in order
 GND
 VIN
-RST -&gt; 45
-D/C -&gt; 47
-CS -&gt; 49
-MOSI -&gt; 51
-SCK -&gt; 52
-MISO -&gt; 50</text>
+RST -&gt; 45 -&gt; PL4
+D/C -&gt; 47 -&gt; PL2
+CS -&gt; 49 -&gt; PL0
+MOSI -&gt; 51 -&gt; PB2
+SCK -&gt; 52 -&gt; PB1
+MISO -&gt; 50 -&gt; PB3
+SDCS -&gt; 43 -&gt; PL6</text>
 </plain>
 <instances>
 <instance part="ICSP" gate="A" x="228.6" y="152.4">
